@@ -22,6 +22,7 @@ const sampleEvents: CalendarEvent[] = [
 function App() {
   const [currentMonth, setCurrentMonth] = useState(7); // July = 7
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [events] = useState<CalendarEvent[]>([
     // July Events
     { id: '1', title: 'Summer Session Begins', date: '2024-07-25', type: 'event', color: 'bg-blue-500' },
@@ -56,25 +57,101 @@ function App() {
     { id: '28', title: 'Department Final Report', date: '2024-08-30', type: 'assignment', color: 'bg-orange-500' },
     
     // September Events
-    { id: '29', title: 'Fall Semester Begins', date: '2024-09-02', type: 'event', color: 'bg-blue-500' },
-    { id: '30', title: 'Add/Drop Deadline', date: '2024-09-06', type: 'assignment', color: 'bg-red-500' },
-    { id: '31', title: 'Career Fair', date: '2024-09-12', type: 'event', color: 'bg-green-500' },
-    { id: '32', title: 'First Quiz Week', date: '2024-09-18', type: 'exam', color: 'bg-purple-500' },
-    { id: '33', title: 'Research Proposal Due', date: '2024-09-25', type: 'assignment', color: 'bg-orange-500' },
+    { id: '29', title: 'Onam Holiday', date: '2024-09-01', type: 'event', color: 'bg-yellow-500' },
+    { id: '30', title: 'Onam Holiday', date: '2024-09-02', type: 'event', color: 'bg-yellow-500' },
+    { id: '31', title: 'Onam Holiday', date: '2024-09-03', type: 'event', color: 'bg-yellow-500' },
+    { id: '32', title: 'Last Date for Attendance and Internal Mark Corrections', date: '2024-09-04', type: 'assignment', color: 'bg-red-500' },
+    { id: '33', title: 'Submission of Monthly Attendance to Principal', date: '2024-09-05', type: 'assignment', color: 'bg-blue-500' },
+    { id: '34', title: '', date: '2024-09-06', type: 'event', color: 'bg-gray-300' },
+    { id: '35', title: '', date: '2024-09-07', type: 'event', color: 'bg-gray-300' },
+    { id: '36', title: 'Second Advisory Meeting & Submission of Minutes', date: '2024-09-08', type: 'event', color: 'bg-green-500' },
+    { id: '37', title: 'Submission of Attendance and Internal Marks', date: '2024-09-09', type: 'assignment', color: 'bg-blue-500' },
+    { id: '38', title: 'Commencement of S3/S5/S7 Examinations', date: '2024-09-10', type: 'exam', color: 'bg-purple-500' },
+    { id: '39', title: 'S3 Examination Review', date: '2024-09-11', type: 'event', color: 'bg-green-500' },
+    { id: '40', title: 'Module Test Report Submission', date: '2024-09-12', type: 'assignment', color: 'bg-orange-500' },
+    { id: '41', title: 'Faculty Meeting/Session', date: '2024-09-13', type: 'event', color: 'bg-green-500' },
+    { id: '42', title: '', date: '2024-09-14', type: 'event', color: 'bg-gray-300' },
+    { id: '43', title: 'Series Test Report Submission', date: '2024-09-15', type: 'assignment', color: 'bg-orange-500' },
+    { id: '44', title: 'Last Date for Entering Attendance on KTU Portal', date: '2024-09-16', type: 'assignment', color: 'bg-red-500' },
+    { id: '45', title: 'Submission of Final Internal Marks Report to Principal', date: '2024-09-17', type: 'assignment', color: 'bg-blue-500' },
+    { id: '46', title: 'Series Test Report Submission', date: '2024-09-18', type: 'assignment', color: 'bg-orange-500' },
+    { id: '47', title: 'Module 2 Completion and Submission of Lab Reports', date: '2024-09-19', type: 'assignment', color: 'bg-blue-500' },
+    { id: '48', title: 'Sports Day (Holiday)', date: '2024-09-20', type: 'event', color: 'bg-yellow-500' },
+    { id: '49', title: '', date: '2024-09-21', type: 'event', color: 'bg-gray-300' },
+    { id: '50', title: 'Lab Examination Submission and Department Report Review', date: '2024-09-22', type: 'assignment', color: 'bg-blue-500' },
+    { id: '51', title: 'Module 1 Completion & Lab Experiments Review', date: '2024-09-23', type: 'assignment', color: 'bg-blue-500' },
+    { id: '52', title: 'Faculty Meeting/Review', date: '2024-09-24', type: 'event', color: 'bg-green-500' },
+    { id: '53', title: 'S7 Exam/Revision', date: '2024-09-25', type: 'exam', color: 'bg-purple-500' },
+    { id: '54', title: 'Internal Lab / Retest Sessions', date: '2024-09-26', type: 'exam', color: 'bg-purple-500' },
+    { id: '55', title: '', date: '2024-09-27', type: 'event', color: 'bg-gray-300' },
+    { id: '56', title: '', date: '2024-09-28', type: 'event', color: 'bg-gray-300' },
+    { id: '57', title: 'Final Submission of Results', date: '2024-09-29', type: 'assignment', color: 'bg-blue-500' },
+    { id: '58', title: 'Submission of Final IA Marks & Attendance Reports to Dean', date: '2024-09-30', type: 'assignment', color: 'bg-blue-500' },
     
     // October Events
-    { id: '34', title: 'Midterm Exam Period', date: '2024-10-07', type: 'exam', color: 'bg-purple-500' },
-    { id: '35', title: 'Fall Break', date: '2024-10-14', type: 'event', color: 'bg-green-500' },
-    { id: '36', title: 'Graduate School Fair', date: '2024-10-21', type: 'event', color: 'bg-green-500' },
-    { id: '37', title: 'Term Paper Draft Due', date: '2024-10-28', type: 'assignment', color: 'bg-orange-500' },
-    { id: '38', title: 'Halloween Campus Event', date: '2024-10-31', type: 'event', color: 'bg-orange-500' },
+    { id: '59', title: 'Lab Examinations for S3, S5 & S7', date: '2024-10-01', type: 'exam', color: 'bg-purple-500' },
+    { id: '60', title: 'Gandhi Jayanti - VijayaDhashami (Holiday)', date: '2024-10-02', type: 'event', color: 'bg-yellow-500' },
+    { id: '61', title: 'Module Test Report Submission', date: '2024-10-03', type: 'assignment', color: 'bg-orange-500' },
+    { id: '62', title: 'Module Completion Report Submission', date: '2024-10-04', type: 'assignment', color: 'bg-orange-500' },
+    { id: '63', title: '', date: '2024-10-05', type: 'event', color: 'bg-gray-300' },
+    { id: '64', title: 'Final Submission of Internal Marks to KTU Portal', date: '2024-10-06', type: 'assignment', color: 'bg-blue-500' },
+    { id: '65', title: 'Review of Attendance and Internal Marks', date: '2024-10-07', type: 'assignment', color: 'bg-red-500' },
+    { id: '66', title: 'Faculty Meeting/Session', date: '2024-10-08', type: 'event', color: 'bg-green-500' },
+    { id: '67', title: 'Department Meeting', date: '2024-10-09', type: 'event', color: 'bg-green-500' },
+    { id: '68', title: 'Review of Department Reports', date: '2024-10-10', type: 'assignment', color: 'bg-blue-500' },
+    { id: '69', title: 'Faculty Alignment and Training', date: '2024-10-11', type: 'event', color: 'bg-green-500' },
+    { id: '70', title: '', date: '2024-10-12', type: 'event', color: 'bg-gray-300' },
+    { id: '71', title: 'Submission of First Series Result Analysis', date: '2024-10-13', type: 'assignment', color: 'bg-orange-500' },
+    { id: '72', title: 'Module Test Report Submission', date: '2024-10-14', type: 'assignment', color: 'bg-orange-500' },
+    { id: '73', title: 'Review of Module Test Results', date: '2024-10-15', type: 'assignment', color: 'bg-blue-500' },
+    { id: '74', title: 'Faculty Meeting / Department Review', date: '2024-10-16', type: 'event', color: 'bg-green-500' },
+    { id: '75', title: 'Submission of Attendance and Report to Principal', date: '2024-10-17', type: 'assignment', color: 'bg-blue-500' },
+    { id: '76', title: 'Faculty Meeting/Departmental Discussion', date: '2024-10-18', type: 'event', color: 'bg-green-500' },
+    { id: '77', title: '', date: '2024-10-19', type: 'event', color: 'bg-gray-300' },
+    { id: '78', title: 'Sports Day', date: '2024-10-20', type: 'event', color: 'bg-yellow-500' },
+    { id: '79', title: 'Module Test 2 Completion', date: '2024-10-21', type: 'assignment', color: 'bg-orange-500' },
+    { id: '80', title: 'Lab Completion Reports', date: '2024-10-22', type: 'assignment', color: 'bg-blue-500' },
+    { id: '81', title: 'Department Meeting', date: '2024-10-23', type: 'event', color: 'bg-green-500' },
+    { id: '82', title: 'Internal Lab / Retest Sessions', date: '2024-10-24', type: 'exam', color: 'bg-purple-500' },
+    { id: '83', title: '', date: '2024-10-25', type: 'event', color: 'bg-gray-300' },
+    { id: '84', title: '', date: '2024-10-26', type: 'event', color: 'bg-gray-300' },
+    { id: '85', title: 'Module Test Report Submission', date: '2024-10-27', type: 'assignment', color: 'bg-orange-500' },
+    { id: '86', title: 'Internal Lab Completion / Retest', date: '2024-10-28', type: 'exam', color: 'bg-purple-500' },
+    { id: '87', title: 'Final Submission of Reports', date: '2024-10-29', type: 'assignment', color: 'bg-blue-500' },
+    { id: '88', title: 'Module Test Results Submission', date: '2024-10-30', type: 'assignment', color: 'bg-orange-500' },
+    { id: '89', title: 'Submission of Monthly ERP Completion Status to Principal', date: '2024-10-31', type: 'assignment', color: 'bg-blue-500' },
     
     // November Events
-    { id: '39', title: 'Registration for Spring', date: '2024-11-04', type: 'assignment', color: 'bg-red-500' },
-    { id: '40', title: 'Academic Conference', date: '2024-11-11', type: 'event', color: 'bg-green-500' },
-    { id: '41', title: 'Final Project Proposals', date: '2024-11-18', type: 'assignment', color: 'bg-orange-500' },
-    { id: '42', title: 'Thanksgiving Break', date: '2024-11-25', type: 'event', color: 'bg-blue-500' },
-    { id: '43', title: 'Classes Resume', date: '2024-11-29', type: 'class', color: 'bg-indigo-500' },
+    { id: '90', title: 'Submission of Monthly Attendance to Principal', date: '2024-11-01', type: 'assignment', color: 'bg-blue-500' },
+    { id: '91', title: '', date: '2024-11-02', type: 'event', color: 'bg-gray-300' },
+    { id: '92', title: 'Second Advisory Meeting & Submission of Minutes', date: '2024-11-03', type: 'event', color: 'bg-green-500' },
+    { id: '93', title: 'Submission of Attendance and Internal Marks', date: '2024-11-04', type: 'assignment', color: 'bg-blue-500' },
+    { id: '94', title: 'Module Test Report Submission', date: '2024-11-05', type: 'assignment', color: 'bg-orange-500' },
+    { id: '95', title: 'Department Review and Faculty Meeting', date: '2024-11-06', type: 'event', color: 'bg-green-500' },
+    { id: '96', title: 'Submission of Final Internal Marks Report to Principal', date: '2024-11-07', type: 'assignment', color: 'bg-blue-500' },
+    { id: '97', title: '', date: '2024-11-08', type: 'event', color: 'bg-gray-300' },
+    { id: '98', title: '', date: '2024-11-09', type: 'event', color: 'bg-gray-300' },
+    { id: '99', title: 'Module Test Report Submission', date: '2024-11-10', type: 'assignment', color: 'bg-orange-500' },
+    { id: '100', title: 'Review of Series Test Results', date: '2024-11-11', type: 'assignment', color: 'bg-blue-500' },
+    { id: '101', title: 'Faculty Alignment Program', date: '2024-11-12', type: 'event', color: 'bg-green-500' },
+    { id: '102', title: 'Department Analysis and Report Submission', date: '2024-11-13', type: 'assignment', color: 'bg-orange-500' },
+    { id: '103', title: 'Sports Day', date: '2024-11-14', type: 'event', color: 'bg-yellow-500' },
+    { id: '104', title: 'Module Completion Report Submission', date: '2024-11-15', type: 'assignment', color: 'bg-blue-500' },
+    { id: '105', title: '', date: '2024-11-16', type: 'event', color: 'bg-gray-300' },
+    { id: '106', title: 'Module Test 2 Report Submission', date: '2024-11-17', type: 'assignment', color: 'bg-orange-500' },
+    { id: '107', title: 'Department Meeting and Review', date: '2024-11-18', type: 'event', color: 'bg-green-500' },
+    { id: '108', title: 'Internal Lab / Retest Sessions', date: '2024-11-19', type: 'exam', color: 'bg-purple-500' },
+    { id: '109', title: 'Final Submission of Reports', date: '2024-11-20', type: 'assignment', color: 'bg-blue-500' },
+    { id: '110', title: 'Review of Student Feedback', date: '2024-11-21', type: 'event', color: 'bg-green-500' },
+    { id: '111', title: 'Faculty Meeting', date: '2024-11-22', type: 'event', color: 'bg-green-500' },
+    { id: '112', title: '', date: '2024-11-23', type: 'event', color: 'bg-gray-300' },
+    { id: '113', title: 'Sports Day', date: '2024-11-24', type: 'event', color: 'bg-yellow-500' },
+    { id: '114', title: 'Internal Lab Retest and Submission', date: '2024-11-25', type: 'exam', color: 'bg-purple-500' },
+    { id: '115', title: 'Module Test Report Submission', date: '2024-11-26', type: 'assignment', color: 'bg-orange-500' },
+    { id: '116', title: 'Final IA Marks Submission', date: '2024-11-27', type: 'assignment', color: 'bg-blue-500' },
+    { id: '117', title: 'Final Submission of Department Reports', date: '2024-11-28', type: 'assignment', color: 'bg-blue-500' },
+    { id: '118', title: '', date: '2024-11-29', type: 'event', color: 'bg-gray-300' },
+    { id: '119', title: '', date: '2024-11-30', type: 'event', color: 'bg-gray-300' },
   ]);
 
   const monthNames = ['', '', '', '', '', '', '', 'July', 'August', 'September', 'October', 'November'];
@@ -201,15 +278,19 @@ function App() {
                       </div>
                       
                       <div className="space-y-1">
-                        {dayEvents.slice(0, 2).map((event) => (
-                          <div
-                            key={event.id}
-                            className={`text-xs px-2 py-1 rounded text-white flex items-center gap-1 ${event.color}`}
-                          >
-                            {getEventTypeIcon(event.type)}
-                            <span className="truncate">{event.title}</span>
-                          </div>
-                        ))}
+                {dayEvents.slice(0, 2).map((event) => (
+                  <div
+                    key={event.id}
+                    className={`text-xs px-2 py-1 rounded text-white flex items-center gap-1 ${event.color} cursor-pointer`}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setSelectedEvent(event);
+                    }}
+                  >
+                    {getEventTypeIcon(event.type)}
+                    <span className="truncate">{event.title}</span>
+                  </div>
+                ))}
                         {dayEvents.length > 2 && (
                           <div className="text-xs text-slate-500 px-2">
                             +{dayEvents.length - 2} more
@@ -304,11 +385,10 @@ function App() {
                 day: 'numeric' 
               })}
             </h3>
-            
             {getEventsForDate(selectedDate).length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {getEventsForDate(selectedDate).map((event) => (
-                  <div key={event.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div key={event.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedEvent(event)}>
                     <div className="flex items-center gap-2 mb-2">
                       <div className={`w-4 h-4 rounded ${event.color} flex items-center justify-center text-white`}>
                         {getEventTypeIcon(event.type)}
@@ -322,6 +402,36 @@ function App() {
             ) : (
               <p className="text-slate-500 italic">No events scheduled for this date.</p>
             )}
+          </div>
+        )}
+
+        {/* Event Detail Modal */}
+        {selectedEvent && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative animate-fade-in">
+              <button
+                className="absolute top-3 right-3 text-slate-400 hover:text-slate-700 text-2xl font-bold"
+                onClick={() => setSelectedEvent(null)}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-6 h-6 rounded-full ${selectedEvent.color} flex items-center justify-center text-white`}>
+                  {getEventTypeIcon(selectedEvent.type)}
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800">{selectedEvent.title || 'No Title'}</h3>
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold text-slate-700">Date: </span>
+                <span className="text-slate-600">{new Date(selectedEvent.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              </div>
+              <div className="mb-2">
+                <span className="font-semibold text-slate-700">Type: </span>
+                <span className="capitalize text-slate-600">{selectedEvent.type}</span>
+              </div>
+              {/* Add more details here if needed */}
+            </div>
           </div>
         )}
       </div>
